@@ -1,0 +1,1 @@
+A mobile scoresheet for gin rummy, eventually.
