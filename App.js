@@ -4,9 +4,9 @@ import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
 export default function App() {
   return (
-    <SafeAreaView>
-      <View style={styles.container}>
-        <Text>Hi there</Text>
+    <SafeAreaView style={styles.container}>
+      <View>
+        <Text>Testing connection</Text>
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
