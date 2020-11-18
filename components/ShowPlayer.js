@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import DisplayScores from './DisplayScores';
@@ -11,7 +11,7 @@ const ShowPlayer = ({ item }) => {
       <Text>
         Hi {name}. Your total score is {totalScore}.
       </Text>
-      {/* <DisplayScores scores={scores} total={totalScore} /> */}
+      <DisplayScores scores={scores} total={totalScore} />
     </View>
   );
 };

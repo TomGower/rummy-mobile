@@ -1,18 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useRef } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-  TouchableOpacity,
-  TextInput,
-  FlatList,
-} from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
 import AddPlayers from './components/AddPlayers';
 import GameReset from './components/GameReset';
 import ShowPlayer from './components/ShowPlayer';
-// import DisplayPlayer from './components/DisplayPlayer';
 
 export default function App() {
   const [players, setPlayers] = useState([]);
@@ -38,9 +29,8 @@ export default function App() {
     setPlayers([...players, newPlayer]);
     setPlayerScores([
       ...playerScores,
-      { name: newPlayer, scores: [0], totalScore: 0 },
+      { name: newPlayer, scores: [0, 10], totalScore: 10 },
     ]);
-    // setPlayerScores({ ...playerScores, [newPlayer]: [0] });
   };
 
   // browser version
