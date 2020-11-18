@@ -8,18 +8,6 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-// browser version
-// const AddPlayers = ({ submitFunc }, ref) => (
-//   <form onSubmit={submitFunc} ref={ref} className="add-players">
-//     <label htmlFor="playerName">
-//       Player name:
-//       <input type="text" id="playerName" name="playerName" />
-//     </label>
-//     <br />
-//     <input type="submit" value="Add Player" />
-//   </form>
-// );
-
 const AddPlayers = ({ submitFunc }) => {
   const [value, setValue] = useState('');
 
@@ -30,11 +18,11 @@ const AddPlayers = ({ submitFunc }) => {
 
   return (
     <>
-      <Text>Player name:</Text>
+      <Text>New Player Name:</Text>
       <TextInput style={styles.input} value={value} onChangeText={setValue} />
       <TouchableOpacity style={styles.buttonWrapper} onPress={handleSubmit}>
-        <View>
-          <Text>Add Player</Text>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>Add Player</Text>
         </View>
       </TouchableOpacity>
     </>
@@ -49,7 +37,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   buttonWrapper: {
-    height: 100,
+    height: 50,
     marginHorizontal: 10,
   },
   buttonText: {
