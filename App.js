@@ -11,11 +11,12 @@ import {
 } from 'react-native';
 import AddPlayers from './components/AddPlayers';
 import GameReset from './components/GameReset';
+import ShowPlayer from './components/ShowPlayer';
 // import DisplayPlayer from './components/DisplayPlayer';
 
 export default function App() {
   const [players, setPlayers] = useState([]);
-  const [playerScores, setPlayerScores] = useState({});
+  const [playerScores, setPlayerScores] = useState([]);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
   const scoreRef = useRef();
 
@@ -25,7 +26,7 @@ export default function App() {
   // browser version
   const resetGame = () => {
     setPlayers([]);
-    setPlayerScores({});
+    setPlayerScores([]);
     setRoundsPlayed(0);
   };
 
@@ -35,7 +36,11 @@ export default function App() {
       return;
     }
     setPlayers([...players, newPlayer]);
-    setPlayerScores({ ...playerScores, [newPlayer]: [0] });
+    setPlayerScores([
+      ...playerScores,
+      { name: newPlayer, scores: [0], totalScore: 0 },
+    ]);
+    // setPlayerScores({ ...playerScores, [newPlayer]: [0] });
   };
 
   // browser version
@@ -64,14 +69,14 @@ export default function App() {
       <View>
         <GameReset resetFunc={resetGame} />
         <AddPlayers submitFunc={addPlayer} />
-        <Text>{players.length}</Text>
+        <Text>PlayerScores Length is {playerScores.length}</Text>
         {players.length > 0 ? (
           <>
             <Text>Displaying Players</Text>
             <FlatList
-              data={players}
+              data={playerScores}
               keyExtractor={(item, index) => index.toString()}
-              renderItem={DisplayPlayer}
+              renderItem={ShowPlayer}
             />
           </>
         ) : null}

@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
+import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import DisplayScores from './DisplayScores';
 
-// browser version, needs at least mobile styling
-const ShowPlayer = ({ playerName, scores }) => {
-  const [totalScore, setTotalScore] = useState(0);
-  const stringifiedScores = JSON.stringify(scores);
-
-  useEffect(() => {
-    setTotalScore(scores.reduce((acc, curr) => acc + curr));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [stringifiedScores]);
+const ShowPlayer = ({ item }) => {
+  const { name, scores, totalScore } = item;
 
   return (
-    <div>
-      <h1 className="playerHeader">{`${playerName}: ${totalScore}`}</h1>
-      <DisplayScores scores={scores} total={totalScore} />
-    </div>
+    <View>
+      <Text>
+        Hi {name}. Your total score is {totalScore}.
+      </Text>
+      {/* <DisplayScores scores={scores} total={totalScore} /> */}
+    </View>
   );
 };
 
