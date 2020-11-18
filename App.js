@@ -3,18 +3,18 @@ import React, { useState, useRef } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
 import AddPlayers from './components/AddPlayers';
 import GameReset from './components/GameReset';
+import ScoreUpdater from './components/ScoreUpdater';
 import ShowPlayer from './components/ShowPlayer';
 
 export default function App() {
   const [players, setPlayers] = useState([]);
   const [playerScores, setPlayerScores] = useState([]);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
-  const scoreRef = useRef();
 
   // works for mobile
   const DisplayPlayer = ({ item }) => <Text>{item}</Text>;
 
-  // browser version
+  // seems to work for mobile
   const resetGame = () => {
     setPlayers([]);
     setPlayerScores([]);
@@ -29,29 +29,26 @@ export default function App() {
     setPlayers([...players, newPlayer]);
     setPlayerScores([
       ...playerScores,
-      { name: newPlayer, scores: [0, 10], totalScore: 10 },
+      { name: newPlayer, scores: [0], totalScore: 0 },
     ]);
   };
 
-  // browser version
-  const updateScore = (event) => {
-    event.preventDefault();
+  // seems to work for mobile
+  const updateScore = (newScores) => {
     let oldScores = playerScores;
-    const { target } = event;
-    players.forEach((player) => {
-      if (target[player].value) {
-        let oldPlayerScore = oldScores[player];
-        if (oldPlayerScore.length === 1 && oldPlayerScore[0] === 0) {
-          oldPlayerScore = [+target[player].value];
+    for (let i = 0; i < playerScores.length; i++) {
+      if (newScores[i]) {
+        const curr = +newScores[i];
+        if (oldScores[i].scores.length === 1 && oldScores[i].scores[0] === 0) {
+          oldScores[i].scores = [curr];
         } else {
-          oldPlayerScore.push(+target[player].value);
+          oldScores[i].scores.push(curr);
         }
-        oldScores = { ...oldScores, [player]: oldPlayerScore };
+        oldScores[i].totalScore += curr;
       }
-    });
+    }
     setPlayerScores(oldScores);
     setRoundsPlayed(roundsPlayed + 1);
-    scoreRef.current.reset();
   };
 
   return (
@@ -59,10 +56,12 @@ export default function App() {
       <View>
         <GameReset resetFunc={resetGame} />
         <AddPlayers submitFunc={addPlayer} />
-        <Text>PlayerScores Length is {playerScores.length}</Text>
+        <Text>PlayerScores Length is now {playerScores.length}</Text>
+        <Text>You have played {roundsPlayed} rounds.</Text>
         {players.length > 0 ? (
           <>
             <Text>Displaying Players</Text>
+            <ScoreUpdater updateScore={updateScore} players={players} />
             <FlatList
               data={playerScores}
               keyExtractor={(item, index) => index.toString()}

@@ -1,29 +1,98 @@
-import React, { forwardRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  FlatList,
+  TextInput,
+} from 'react-native';
 import PropTypes from 'prop-types';
 
-// browser version, mobile does not support map
-const ScoreUpdater = ({ updateScore, players }, ref) => {
+// incomplete mobile version
+const ScoreUpdater = ({ updateScore, players }) => {
+  const [values, setValues] = useState([]);
+
+  useEffect(() => {
+    setValues(new Array(players.length).fill(0));
+  }, [players.length]);
+
+  const updateValues = (newValue, index) => {
+    let oldValues = values;
+    oldValues[index] = newValue;
+    setValues(oldValues);
+  };
+
+  // not sure yet how to clear input fields
+  // possible bad solution: creating a variable number of refs???
+  const handleUpdate = () => {
+    updateScore(values);
+    let oldValues = values;
+    for (let i = 0; i < oldValues.length; i++) {
+      oldValues[i] = 0;
+    }
+    setValues(oldValues);
+  };
+
+  const renderPlayer = ({ item, index }) => {
+    return (
+      <View>
+        <Text>Score for {item}:</Text>
+        <TextInput
+          style={styles.input}
+          keyboardType="numeric"
+          onChangeText={(value) => updateValues(value, index)}
+        />
+      </View>
+    );
+  };
+
   return (
-    <form onSubmit={updateScore} ref={ref}>
-      <div className="playerContainer">
-        {players.map((player) => (
-          <label htmlFor={player} key={player}>
-            {`Points for ${player}:`}
-            <input type="number" id={`${player}score`} name={player} />
-          </label>
-        ))}
-      </div>
-      <br />
-      <input
-        type="submit"
-        value="Update Scores"
-        disabled={players.length === 0}
+    <>
+      <FlatList
+        data={players}
+        keyExtractor={(item) => item}
+        renderItem={renderPlayer}
       />
-    </form>
+      <TouchableOpacity style={styles.buttonWrapper} onPress={handleUpdate}>
+        <View style={styles.button}>
+          <Text style={styles.buttonText}>Update Scores</Text>
+        </View>
+      </TouchableOpacity>
+    </>
   );
 };
 
-export default forwardRef(ScoreUpdater);
+const styles = StyleSheet.create({
+  input: {
+    borderWidth: 1,
+    borderColor: 'grey',
+    padding: 5,
+    marginBottom: 20,
+    width: 210,
+  },
+  buttonWrapper: {
+    height: 50,
+    marginHorizontal: 10,
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold',
+  },
+  button: {
+    height: 40,
+    backgroundColor: 'teal',
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  containerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+});
+
+export default ScoreUpdater;
 
 ScoreUpdater.propTypes = {
   updateScore: PropTypes.func.isRequired,
