@@ -9,15 +9,17 @@ import {
   TextInput,
   FlatList,
 } from 'react-native';
-// import AddPlayer from './components/AddPlayers';
-import DisplayPlayer from './components/DisplayPlayer';
+import AddPlayers from './components/AddPlayers';
+// import DisplayPlayer from './components/DisplayPlayer';
 
 export default function App() {
-  const [playerName, setPlayerName] = useState('');
   const [players, setPlayers] = useState([]);
   const [playerScores, setPlayerScores] = useState({});
   const [roundsPlayed, setRoundsPlayed] = useState(0);
   const scoreRef = useRef();
+
+  // works for mobile
+  const DisplayPlayer = ({ item }) => <Text>{item}</Text>;
 
   // browser version
   const resetGame = () => {
@@ -26,16 +28,13 @@ export default function App() {
     setRoundsPlayed(0);
   };
 
-  // browser version
+  // seems to work for mobile
   const addPlayer = (newPlayer) => {
     if (!newPlayer) {
       return;
     }
     setPlayers([...players, newPlayer]);
     setPlayerScores({ ...playerScores, [newPlayer]: [0] });
-    setPlayerName('');
-    console.table(players);
-    // playerFormRef.current.reset();
   };
 
   // browser version
@@ -62,28 +61,23 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        {/* This is the start of what would be the AddPlayer component  */}
-        <Text>Testing old connection</Text>
-        <Text>Player name:</Text>
-        <TextInput
-          style={styles.input}
-          value={playerName}
-          onChangeText={setPlayerName}
-        />
-        <TouchableOpacity style={styles.buttonWrapper} onPress={addPlayer}>
+        <TouchableOpacity onPress={resetGame}>
           <View>
-            <Text>Add Player</Text>
+            <Text>Reset Game</Text>
           </View>
         </TouchableOpacity>
-        {/* This is the end of what would be the AddPlayer component */}
+        <AddPlayers submitFunc={addPlayer} />
         <Text>{players.length}</Text>
-        {/* {players.length > 0 ? (
-          <FlatList
-            data={players}
-            keyExtractor={(item) => item}
-            renderItem={(name) => DisplayPlayer(name)}
-          />
-        ) : null} */}
+        {players.length > 0 ? (
+          <>
+            <Text>Displaying Players</Text>
+            <FlatList
+              data={players}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={DisplayPlayer}
+            />
+          </>
+        ) : null}
         <StatusBar style="auto" />
       </View>
     </SafeAreaView>
@@ -96,6 +90,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 50,
   },
   input: {
     borderWidth: 1,

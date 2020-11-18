@@ -1,10 +1,10 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+// import React from 'react';
+// import { Text } from 'react-native';
 
-const DisplayPlayer = ({ name }) => (
-  <View>
-    <Text>{name}</Text>
-  </View>
-);
+// const DisplayPlayer = (name) => <Text>{name}</Text>;
 
-export default DisplayPlayer;
+// export default DisplayPlayer;
+
+/*
+Small file, extracted to App.js
+*/
