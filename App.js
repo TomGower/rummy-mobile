@@ -78,31 +78,10 @@ export default function App() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    width: '100%',
+    minWidth: '75%',
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 50,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'grey',
-    padding: 5,
-    marginBottom: 20,
-  },
-  buttonWrapper: {
-    height: 100,
-    marginHorizontal: 10,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-  },
-  button: {
-    height: 40,
-    backgroundColor: 'teal',
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 });
