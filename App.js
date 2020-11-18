@@ -10,6 +10,7 @@ import {
   FlatList,
 } from 'react-native';
 import AddPlayers from './components/AddPlayers';
+import GameReset from './components/GameReset';
 // import DisplayPlayer from './components/DisplayPlayer';
 
 export default function App() {
@@ -61,11 +62,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <TouchableOpacity onPress={resetGame}>
-          <View>
-            <Text>Reset Game</Text>
-          </View>
-        </TouchableOpacity>
+        <GameReset resetFunc={resetGame} />
         <AddPlayers submitFunc={addPlayer} />
         <Text>{players.length}</Text>
         {players.length > 0 ? (
