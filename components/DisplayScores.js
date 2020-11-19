@@ -12,7 +12,6 @@ const DisplayScores = ({ scores, total }) => {
   };
 
   const renderFunc = ({ index, item }) => {
-    console.log(item);
     if (index === 0) {
       return (
         <View>
