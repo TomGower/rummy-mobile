@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
 import AddPlayers from './components/AddPlayers';
 import GameReset from './components/GameReset';
@@ -10,9 +10,6 @@ export default function App() {
   const [players, setPlayers] = useState([]);
   const [playerScores, setPlayerScores] = useState([]);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
-
-  // works for mobile
-  const DisplayPlayer = ({ item }) => <Text>{item}</Text>;
 
   // seems to work for mobile
   const resetGame = () => {
@@ -56,7 +53,6 @@ export default function App() {
       <View>
         <GameReset resetFunc={resetGame} />
         <AddPlayers submitFunc={addPlayer} />
-        <Text>PlayerScores Length is now {playerScores.length}</Text>
         <Text>You have played {roundsPlayed} rounds.</Text>
         {players.length > 0 ? (
           <>
@@ -64,7 +60,7 @@ export default function App() {
             <ScoreUpdater updateScore={updateScore} players={players} />
             <FlatList
               data={playerScores}
-              keyExtractor={(item, index) => index.toString()}
+              keyExtractor={(item) => item.name}
               renderItem={ShowPlayer}
             />
           </>

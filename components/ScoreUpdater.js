@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-// incomplete mobile version
+// functional but incomplete mobile version
 const ScoreUpdater = ({ updateScore, players }) => {
   const [values, setValues] = useState([]);
 
@@ -27,10 +27,11 @@ const ScoreUpdater = ({ updateScore, players }) => {
   // possible bad solution: creating a variable number of refs???
   const handleUpdate = () => {
     updateScore(values);
-    setValues(new Array(players.length).fill(null));
+    const newArr = new Array(players.length).fill(null);
+    setValues(newArr);
   };
 
-  const renderPlayer = ({ item, index }) => {
+  const renderPlayerScores = ({ item, index }) => {
     return (
       <View>
         <Text>Score for {item}:</Text>
@@ -49,7 +50,7 @@ const ScoreUpdater = ({ updateScore, players }) => {
       <FlatList
         data={players}
         keyExtractor={(item) => item}
-        renderItem={renderPlayer}
+        renderItem={renderPlayerScores}
       />
       <TouchableOpacity style={styles.buttonWrapper} onPress={handleUpdate}>
         <View style={styles.button}>
