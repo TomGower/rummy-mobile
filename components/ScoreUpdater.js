@@ -14,7 +14,7 @@ const ScoreUpdater = ({ updateScore, players }) => {
   const [values, setValues] = useState([]);
 
   useEffect(() => {
-    setValues(new Array(players.length).fill(0));
+    setValues(new Array(players.length).fill(null));
   }, [players.length]);
 
   const updateValues = (newValue, index) => {
@@ -27,11 +27,7 @@ const ScoreUpdater = ({ updateScore, players }) => {
   // possible bad solution: creating a variable number of refs???
   const handleUpdate = () => {
     updateScore(values);
-    let oldValues = values;
-    for (let i = 0; i < oldValues.length; i++) {
-      oldValues[i] = 0;
-    }
-    setValues(oldValues);
+    setValues(new Array(players.length).fill(null));
   };
 
   const renderPlayer = ({ item, index }) => {
@@ -41,6 +37,7 @@ const ScoreUpdater = ({ updateScore, players }) => {
         <TextInput
           style={styles.input}
           keyboardType="numeric"
+          value={values[index]}
           onChangeText={(value) => updateValues(value, index)}
         />
       </View>
