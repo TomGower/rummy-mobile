@@ -11,7 +11,7 @@ const ShowPlayer = ({ item }) => {
       <Text>
         Hi {name}. Your total score is {totalScore}.
       </Text>
-      <DisplayScores scores={scores} total={totalScore} />
+      {/* <DisplayScores scores={scores} total={totalScore} /> */}
     </View>
   );
 };

@@ -46,7 +46,7 @@ const ScoreUpdater = ({ updateScore, players }) => {
   };
 
   return (
-    <>
+    <View style={styles.containerRow}>
       <FlatList
         data={players}
         keyExtractor={(item) => item}
@@ -57,7 +57,7 @@ const ScoreUpdater = ({ updateScore, players }) => {
           <Text style={styles.buttonText}>Update Scores</Text>
         </View>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 
