@@ -10,6 +10,7 @@ export default function App() {
   const [players, setPlayers] = useState([]);
   const [playerScores, setPlayerScores] = useState([]);
   const [roundsPlayed, setRoundsPlayed] = useState(0);
+  const [updates, setUpdates] = useState(0);
 
   // seems to work for mobile
   const resetGame = () => {
@@ -46,6 +47,7 @@ export default function App() {
     }
     setPlayerScores(oldScores);
     setRoundsPlayed(roundsPlayed + 1);
+    setUpdates(updates + 1);
   };
 
   return (
@@ -57,11 +59,16 @@ export default function App() {
         {players.length > 0 ? (
           <>
             <Text>Displaying Players</Text>
-            <ScoreUpdater updateScore={updateScore} players={players} />
+            <ScoreUpdater
+              updateScore={updateScore}
+              players={players}
+              updates={updates}
+            />
             <FlatList
               data={playerScores}
               keyExtractor={(item) => item.name}
               renderItem={ShowPlayer}
+              extraData={updates}
             />
           </>
         ) : null}
