@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,27 +8,35 @@ import {
   TextInput,
 } from 'react-native';
 import PropTypes from 'prop-types';
+// import RenderPlayerScores from './RenderPlayerScores';
 
 // functional but incomplete mobile version
 const ScoreUpdater = ({ updateScore, players }) => {
   const [values, setValues] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
-    setValues(new Array(players.length).fill(null));
+    setValues(new Array(players.length).fill(undefined));
   }, [players.length]);
 
   const updateValues = (newValue, index) => {
-    let oldValues = values;
-    oldValues[index] = newValue;
-    setValues(oldValues);
+    let newValues = Array.from(values);
+    newValues[index] = newValue;
+    setValues(newValues);
   };
 
   // not sure yet how to clear input fields
   // possible bad solution: creating a variable number of refs???
   const handleUpdate = () => {
     updateScore(values);
-    const newArr = new Array(players.length).fill(null);
+    // for (let i = 0; i < values.length; i++) {
+    //   if (values[i]) {
+    //     console.log(myRefs[i]);
+    //   }
+    // }
+    const newArr = new Array(players.length).fill(undefined);
     setValues(newArr);
+    setUpdate(!update);
   };
 
   const renderPlayerScores = ({ item, index }) => {
@@ -51,6 +59,18 @@ const ScoreUpdater = ({ updateScore, players }) => {
         data={players}
         keyExtractor={(item) => item}
         renderItem={renderPlayerScores}
+        // renderItem={(item, index) => (
+        //   <RenderPlayerScores
+        //     item={item}
+        //     index={index}
+        //     defaultValue={values[index]}
+        //     updates={update}
+        //     changeFunc={updateValues}
+        //     // ref={(el) => myRefs.current.push(el)}
+        //   />
+        // )}
+        extraData={update}
+        // ref={(el) => (myRefs.current[index] = el)}
       />
       <TouchableOpacity style={styles.buttonWrapper} onPress={handleUpdate}>
         <View style={styles.button}>

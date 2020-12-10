@@ -59,11 +59,7 @@ export default function App() {
         {players.length > 0 ? (
           <>
             <Text>Displaying Players</Text>
-            <ScoreUpdater
-              updateScore={updateScore}
-              players={players}
-              updates={updates}
-            />
+            <ScoreUpdater updateScore={updateScore} players={players} />
             <FlatList
               data={playerScores}
               keyExtractor={(item) => item.name}
