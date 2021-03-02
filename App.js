@@ -24,6 +24,11 @@ export default function App() {
     if (!newPlayer) {
       return;
     }
+    if (players.indexOf(newPlayer) !== -1) {
+      // eslint-disable-next-line no-alert
+      alert('All players must have a unique name');
+      return;
+    }
     setPlayers([...players, newPlayer]);
     setPlayerScores([
       ...playerScores,
