@@ -7,11 +7,11 @@ import {
   FlatList,
   TextInput,
 } from 'react-native';
-import PropTypes from 'prop-types';
+import PropTypes, { bool } from 'prop-types';
 // import RenderPlayerScores from './RenderPlayerScores';
 
 // functional but incomplete mobile version
-const ScoreUpdater = ({ updateScore, players }) => {
+const ScoreUpdater = ({ updateScore, players, updateComponent }) => {
   const [values, setValues] = useState([]);
   const [update, setUpdate] = useState(false);
 
@@ -115,4 +115,5 @@ export default ScoreUpdater;
 ScoreUpdater.propTypes = {
   updateScore: PropTypes.func.isRequired,
   players: PropTypes.arrayOf(PropTypes.string).isRequired,
+  updateComponent: bool,
 };
